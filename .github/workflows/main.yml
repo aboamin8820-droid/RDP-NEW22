@@ -14,18 +14,18 @@ jobs:
           Start-Process .\tailscale-setup.exe -ArgumentList '/quiet' -Wait
           & 'C:\Program Files\Tailscale\tailscale.exe' up --authkey ${{ secrets.TAILSCALE_AUTH_KEY }}
           
-      - name: Configure RDP User
+      - name: Configure RDP Access
         shell: powershell
         run: |
-          # الباسورد الجديد: Bashar2026 (قصير وقوي ومن غير رموز معقدة)
-          $name = "Bashar"
-          $pass = "Bashar2026"
-          net user $name $pass /add /passwordchg:no
-          net localgroup Administrators $name /add
-          echo "User Bashar is ready with password Bashar2026"
+          # هنغير باسورد اليوزر الأصلي عشان منعملش يوزر جديد ونوجع دماغنا
+          $Password = "Bashar_2026_Secure!"
+          $User = "runneradmin"
+          net user $User $Password
+          echo "Password for $User updated successfully!"
           
       - name: Keep Alive
         run: |
           echo "Connect now using Tailscale IP"
-          echo "User: Bashar | Pass: Bashar2026"
+          echo "User: runneradmin"
+          echo "Pass: Bashar_2026_Secure!"
           sleep 21600
