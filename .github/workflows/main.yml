@@ -7,10 +7,6 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Preparing Environment
-        run: |
-          python --version
-          
       - name: Connect Tailscale
         shell: powershell
         run: |
@@ -21,17 +17,15 @@ jobs:
       - name: Configure RDP User
         shell: powershell
         run: |
-          # الباسورد الجديد (قوي جداً ومقبول): Bsh@r2026_Secure_RDP
+          # الباسورد الجديد: Bashar2026 (قصير وقوي ومن غير رموز معقدة)
           $name = "Bashar"
-          $pass = "Bsh@r2026_Secure_RDP"
-          net user $name $pass /add
+          $pass = "Bashar2026"
+          net user $name $pass /add /passwordchg:no
           net localgroup Administrators $name /add
-          net localgroup "Remote Desktop Users" $name /add
-          echo "User Created Successfully!"
+          echo "User Bashar is ready with password Bashar2026"
           
       - name: Keep Alive
         run: |
-          echo "RDP is ready!"
-          echo "User: Bashar"
-          echo "Pass: Bsh@r2026_Secure_RDP"
+          echo "Connect now using Tailscale IP"
+          echo "User: Bashar | Pass: Bashar2026"
           sleep 21600
