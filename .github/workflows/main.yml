@@ -12,7 +12,7 @@ jobs:
         run: |
           iwr -useb https://pkgs.tailscale.com/stable/tailscale-setup-latest.exe -OutFile tailscale-setup.exe
           Start-Process .\tailscale-setup.exe -ArgumentList '/quiet' -Wait
-          & 'C:\Program Files\Tailscale\tailscale.exe' up --authkey ${{ secrets.TAILSCALE_AUTH_KEY }}
+          & 'C:\Program Files\Tailscale\tailscale.exe' up --authkey tskey-auth-kuqLQKJXgv11CNTRL-Pg2ikpEnZ7KDYxTnhxMa7K6s7kAHG6Vtg
           
       - name: Configure RDP Access
         shell: powershell
