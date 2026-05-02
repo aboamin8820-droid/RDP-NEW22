@@ -10,22 +10,31 @@ jobs:
       - name: Connect Tailscale
         shell: powershell
         run: |
+          # تحميل وتثبيت تيل سكيل بصمت
           iwr -useb https://pkgs.tailscale.com/stable/tailscale-setup-latest.exe -OutFile tailscale-setup.exe
           Start-Process .\tailscale-setup.exe -ArgumentList '/quiet' -Wait
-          & 'C:\Program Files\Tailscale\tailscale.exe' up --authkey tskey-auth-kuqLQKJXgv11CNTRL-Pg2ikpEnZ7KDYxTnhxMa7K6s7kAHG6Vtg
+          # تسجيل الدخول باستخدام المفتاح الجديد اللي بعته
+          & 'C:\Program Files\Tailscale\tailscale.exe' up --authkey tskey-auth-kg5AzX6A2D11CNTRL-2MyWG8A43DT6xvvNQxS3DTKVr4nm91dn6
           
       - name: Configure RDP Access
         shell: powershell
         run: |
-          # هنغير باسورد اليوزر الأصلي عشان منعملش يوزر جديد ونوجع دماغنا
+          # تحديث كلمة السر لليوزر الأصلي كما طلبت
           $Password = "Bashar_2026_Secure!"
           $User = "runneradmin"
           net user $User $Password
           echo "Password for $User updated successfully!"
           
       - name: Keep Alive
+        shell: powershell
         run: |
-          echo "Connect now using Tailscale IP"
+          # الحصول على الأي بي الخاص بالـ RDP في شبكة Tailscale
+          $TailscaleIP = (& 'C:\Program Files\Tailscale\tailscale.exe' ip -4)
+          echo "----------------------------------------------------"
+          echo "RDP is Ready!"
+          echo "Connect now using Tailscale IP: $TailscaleIP"
           echo "User: runneradmin"
           echo "Pass: Bashar_2026_Secure!"
-          sleep 21600
+          echo "----------------------------------------------------"
+          # الجهاز هيفضل شغال لمدة 6 ساعات
+          Start-Sleep -Seconds 21600
